@@ -10,7 +10,7 @@ class ball(object):
         self.spdy = rand.randint(5, 25)
         self.length = rand.randint(25, 75)
         self.angle = 0
-        self.dead = False
+        self.isAlive = True
         self.image = pygame.transform.scale(self.image,(self.length,self.length))
 
     def redraw(self, screen):
@@ -58,7 +58,22 @@ while done == False:
             ball.spdx = -ball.spdx
         if ball.ypos > height - ball.length / 2 or ball.ypos < 0 + ball.length / 2:
             ball.spdy = -ball.spdy
-    
+
+    for i in ballList:
+        for j in ballList:
+            if i == j:
+                continue
+            x = (i.xpos - j.xpos)**2
+            y = (i.ypos - j.ypos)**2
+            h = (x + y)**0.5
+            if h - (i.length / 2) - (j.length / 2) <= 0:
+                i.isAlive = False
+                j.isAlive = False
+
+    for ball in ballList:
+        if ball.isAlive == False:
+            ballList.remove(ball)
+
     screen.fill(white)
     for ball in ballList:
         ball.redraw(screen)
