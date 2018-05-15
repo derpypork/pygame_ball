@@ -1,11 +1,11 @@
-import sys, pygame
+import sys, pygame, math
 import random as rand
 
 class ball(object):
     image = pygame.image.load("intro_ball.gif")
     def __init__(self):
-        self.xpos = rand.randint(75,width)
-        self.ypos = rand.randint(75,height)
+        self.xpos = rand.randint(75,width - 75)
+        self.ypos = rand.randint(75,height - 75)
         self.spdx = rand.randint(5, 25)
         self.spdy = rand.randint(5, 25)
         self.length = rand.randint(25, 75)
@@ -20,6 +20,45 @@ class ball(object):
         rotrect = self.rotimage.get_rect()
         rotrect.center = (self.xpos, self.ypos)
         screen.blit(self.rotimage, rotrect)
+
+class player(object):
+    playerImage = pygame.image.load()
+    def __init__(self):
+        self.xpos = rand.randint(75,width)
+        self.ypos = rand.randint(75,height)
+        self.spd = 10
+
+    def processevent(self,event):
+        if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_LEFT:
+                self.delta = 3
+            if event.key == pygame.K_RIGHT:
+                self.delta = -3
+                
+            if event.key == pygame.K_UP:
+                self.sp=10
+            if event.key == pygame.K_DOWN:
+                self.sp=-10
+
+            if event.key == pygame.K_SPACE:
+                fire=True
+       
+        if event.type == pygame.KEYUP:
+
+            if event.key == pygame.K_LEFT:
+                self.delta=0
+            if event.key == pygame.K_RIGHT:
+                self.delta=0
+
+            if event.key == pygame.K_UP:
+                self.sp=0
+            if event.key == pygame.K_DOWN:
+                self.sp=0
+
+            if event.key == pygame.K_SPACE:
+                fire=False
+
 
 black = (0, 0, 0)
 white = (255, 255,255)
@@ -54,9 +93,9 @@ while done == False:
         ball.xpos += ball.spdx
         ball.ypos += ball.spdy
 
-        if ball.xpos > width - ball.length / 2 or ball.xpos < 0 + ball.length / 2:
+        if ball.xpos > width - (ball.length / 2) or ball.xpos < 0 + (ball.length / 2):
             ball.spdx = -ball.spdx
-        if ball.ypos > height - ball.length / 2 or ball.ypos < 0 + ball.length / 2:
+        if ball.ypos > height - (ball.length / 2) or ball.ypos < 0 + (ball.length / 2):
             ball.spdy = -ball.spdy
 
     for i in ballList:

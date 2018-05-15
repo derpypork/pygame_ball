@@ -4,8 +4,8 @@ import random as rand
 class ball(object):
     image = pygame.image.load("intro_ball.gif")
     def __init__(self):
-        self.xpos = rand.randint(75,width)
-        self.ypos = rand.randint(75,height)
+        self.xpos = rand.randint(75,width - 75)
+        self.ypos = rand.randint(75,height - 75)
         self.spdx = rand.randint(5, 25)
         self.spdy = rand.randint(5, 25)
         self.length = rand.randint(25, 75)
@@ -54,9 +54,9 @@ while done == False:
         ball.xpos += ball.spdx
         ball.ypos += ball.spdy
 
-        if ball.xpos > width - ball.length / 2 or ball.xpos < 0 + ball.length / 2:
+        if ball.xpos > width - (ball.length / 2) or ball.xpos < 0 + (ball.length / 2):
             ball.spdx = -ball.spdx
-        if ball.ypos > height - ball.length / 2 or ball.ypos < 0 + ball.length / 2:
+        if ball.ypos > height - (ball.length / 2) or ball.ypos < 0 + (ball.length / 2):
             ball.spdy = -ball.spdy
 
     for i in ballList:
