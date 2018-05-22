@@ -22,11 +22,27 @@ class ball(object):
         screen.blit(self.rotimage, rotrect)
 
 class player(object):
-    playerImage = pygame.image.load()
+    playerImage = pygame.image.load("intro_ball.gif")
     def __init__(self):
+        size = 80
         self.xpos = rand.randint(75,width)
         self.ypos = rand.randint(75,height)
         self.spd = 10
+        self.delta = 0
+
+    def updatepos(self,width,height):
+        if self.xpos > width:
+            self.xpos = 0
+        if self.xpos < 0:
+            self.xpos = width
+        if self.ypos > height:
+            self.ypos = 0
+        if self.ypos < 0:
+            self.ypos = height
+        self.angle = self.angle + self.delta
+        self.rotjunk = pygame.transform.rotate(self.junk, self.angle) 
+        self.rotrec = self.rotjunk.get_rect() 
+        self.rotrec.center = (self.xpos,self.ypos) 
 
     def processevent(self,event):
         if event.type == pygame.KEYDOWN:
@@ -118,3 +134,12 @@ while done == False:
         ball.redraw(screen)
     pygame.display.flip()
     clock.tick(20)
+
+done=False
+while not done:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: # If user clicked close
+            #sys.exit(0) #ends the progam
+            done = True # Flag that we are done so we exit this loop
+        else:
+            ship.processevent(event)
