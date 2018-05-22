@@ -25,10 +25,12 @@ class player(object):
     playerImage = pygame.image.load("intro_ball.gif")
     def __init__(self):
         size = 80
-        self.xpos = rand.randint(75,width)
-        self.ypos = rand.randint(75,height)
-        self.spd = 10
+        self.xpos = rand.randint(75,width - 75)
+        self.ypos = rand.randint(75,height - 75)
+        self spd = 10
+        self.length = 75
         self.delta = 0
+        self.image = pygame.transform.scale(self.image,(self.length,self.length))
 
     def updatepos(self,width,height):
         if self.xpos > width:
@@ -135,11 +137,22 @@ while done == False:
     pygame.display.flip()
     clock.tick(20)
 
+playerImage = pygame.transform.rotate(ufo,-90)
+ship = player(width,height,playerImage)
+
 done=False
 while not done:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: # If user clicked close
-            #sys.exit(0) #ends the progam
-            done = True # Flag that we are done so we exit this loop
+        if event.type == pygame.QUIT:
+            done = True
         else:
             ship.processevent(event)
+    
+    ship.updatepos(width,height)
+        
+    screen.fill(black)
+    
+    screen.blit(ship.rotjunk,ship.rotrec) 
+        
+    pygame.display.flip()
+    clock.tick(20)
